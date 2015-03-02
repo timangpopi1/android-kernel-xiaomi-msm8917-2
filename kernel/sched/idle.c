@@ -136,7 +136,6 @@ static void cpuidle_idle_call(void)
 			local_irq_enable();
 			goto exit_idle;
 		}
-
 		reflect = false;
 		next_state = cpuidle_find_deepest_state(drv, dev);
 	} else {
@@ -146,7 +145,11 @@ static void cpuidle_idle_call(void)
 		 */
 		next_state = cpuidle_select(drv, dev);
 	}
-	/* Fall back to the default arch idle method on errors. */
+	/*
+	 * Ask the cpuidle framework to choose a convenient idle state.
+	 * Fall back to the default arch idle method on errors.
+	 */
+	next_state = cpuidle_select(drv, dev);
 	if (next_state < 0)
 		goto use_default;
 
