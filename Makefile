@@ -394,7 +394,6 @@ KBUILD_CFLAGS   := -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
 		   -Wno-format-security \
 		   -std=gnu89 $(call cc-option,-fno-PIE)
 
-
 KBUILD_AFLAGS_KERNEL :=
 KBUILD_CFLAGS_KERNEL :=
 KBUILD_AFLAGS   := -D__ASSEMBLY__ $(call cc-option,-fno-PIE)
@@ -654,8 +653,6 @@ KBUILD_CFLAGS	+= $(call cc-disable-warning, attribute-alias)
 KBUILD_CFLAGS   += $(call cc-disable-warning, address-of-packed-member)
 KBUILD_CFLAGS   += $(call cc-disable-warning, stringop-overflow)
 KBUILD_CFLAGS   += $(call cc-disable-warning, array-bounds)
-KBUILD_CFLAGS	+= $(call cc-option,-fno-PIE)
-KBUILD_AFLAGS	+= $(call cc-option,-fno-PIE)
 
 ifeq ($(cc-name),gcc)
 KBUILD_CFLAGS	+= -Wno-psabi
