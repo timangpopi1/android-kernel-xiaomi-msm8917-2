@@ -1605,6 +1605,7 @@ static int ngd_slim_probe(struct platform_device *pdev)
 	/* Create IPC log context */
 	dev->ipc_slimbus_log = ipc_log_context_create(IPC_SLIMBUS_LOG_PAGES,
 						dev_name(dev->dev), 0);
+<<<<<<< HEAD
 #else
 	/* Initialize the log mask */
 	dev->ipc_log_mask = INFO_LEV;
@@ -1612,7 +1613,6 @@ static int ngd_slim_probe(struct platform_device *pdev)
 	SLIM_INFO(dev, "start logging for slim dev %s\n",
 			dev_name(dev->dev));
 #endif
-
 	ret = sysfs_create_file(&dev->dev->kobj, &dev_attr_debug_mask.attr);
 	if (ret) {
 		dev_err(&pdev->dev, "Failed to create dev. attr\n");
