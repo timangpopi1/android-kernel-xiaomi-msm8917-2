@@ -1,12 +1,5 @@
 version: 2
 jobs:
-  sendinfo:
-    docker:
-      - image: fadlyas/kernel_dockerfile:latest
-    steps:
-      - checkout
-      - run: git clone --quiet -j32 --depth=1 https://github.com/fadlyas07/scripts noob
-      - run: bash noob/paralel/eas-rolex.sh
   compile:
     docker:
       - image: fadlyas/kernel_dockerfile:latest
@@ -25,6 +18,5 @@ workflows:
   version: 2
   cooking:
     jobs:
-      - sendinfo
       - compile
       - compiletoo
