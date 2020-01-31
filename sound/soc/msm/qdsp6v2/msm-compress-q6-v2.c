@@ -3100,6 +3100,7 @@ static int msm_compr_audio_effects_config_get(struct snd_kcontrol *kcontrol,
 	struct snd_compr_stream *cstream = NULL;
 	struct msm_compr_audio *prtd = NULL;
 	int ret = 0;
+	long *values = &(ucontrol->value.integer.value[0]);
 
 	pr_debug("%s\n", __func__);
 	if (fe_id >= MSM_FRONTEND_DAI_MAX) {
@@ -3131,6 +3132,10 @@ static int msm_compr_audio_effects_config_get(struct snd_kcontrol *kcontrol,
 		values[2] = (long)audio_effects->query.size;
 		values[3] = (long)audio_effects->query.offset;
 		values[4] = (long)audio_effects->query.device;
+	done:
+		mutex_unlock(&pdata->lock);
+		return ret;
+
 		if (values[2] > DTS_EAGLE_MAX_PARAM_SIZE_FOR_ALSA) {
 			pr_err("%s: DTS_EAGLE_MODULE parameter's requested size (%li) too large (max size is %i)\n",
 				__func__, values[2],
