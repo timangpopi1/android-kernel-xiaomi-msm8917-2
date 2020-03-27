@@ -1,22 +1,9 @@
 version: 2
 jobs:
-  compile:
+  build:
     docker:
       - image: fadlyas/kernel_dockerfile:latest
     steps:
       - checkout
-      - run: git clone --quiet -j32 --depth=1 https://github.com/fadlyas07/scripts noob
-      - run: bash noob/eas-rolex.sh
-  compiletoo:
-    docker:
-      - image: fadlyas/kernel_dockerfile:latest
-    steps:
-      - checkout
-      - run: git clone --quiet -j32 --depth=1 https://github.com/fadlyas07/scripts noob
-      - run: bash noob/eas-riva.sh
-workflows:
-  version: 2
-  cooking:
-    jobs:
-      - compile
-      - compiletoo
+      - run: wget https://github.com/fadlyas07/Scripts/raw/master/rolex_riva.sh
+      - run: bash rolex_riva.sh
