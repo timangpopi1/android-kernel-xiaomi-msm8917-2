@@ -3446,14 +3446,14 @@ static void cfq_exit_icq(struct io_cq *icq)
 	struct cfq_io_cq *cic = icq_to_cic(icq);
 	struct cfq_data *cfqd = cic_to_cfqd(cic);
 
-	if (cic_to_cfqq(cic, false)) {
-		cfq_exit_cfqq(cfqd, cic_to_cfqq(cic, false));
-		cic_set_cfqq(cic, NULL, false);
+	if (cic->cfqq[BLK_RW_ASYNC]) {
+		cfq_exit_cfqq(cfqd, cic->cfqq[BLK_RW_ASYNC]);
+		cic->cfqq[BLK_RW_ASYNC] = NULL;
 	}
 
-	if (cic_to_cfqq(cic, true)) {
-		cfq_exit_cfqq(cfqd, cic_to_cfqq(cic, true));
-		cic_set_cfqq(cic, NULL, true);
+	if (cic->cfqq[BLK_RW_SYNC]) {
+		cfq_exit_cfqq(cfqd, cic->cfqq[BLK_RW_SYNC]);
+		cic->cfqq[BLK_RW_SYNC] = NULL;
 	}
 }
 
@@ -3512,14 +3512,18 @@ static void check_ioprio_changed(struct cfq_io_cq *cic, struct bio *bio)
 	if (unlikely(!cfqd) || likely(cic->ioprio == ioprio))
 		return;
 
-	cfqq = cic_to_cfqq(cic, false);
+	cfqq = cic->cfqq[BLK_RW_ASYNC];
 	if (cfqq) {
-		cfq_put_queue(cfqq);
-		cfqq = cfq_get_queue(cfqd, BLK_RW_ASYNC, cic, bio, GFP_ATOMIC);
-		cic_set_cfqq(cic, cfqq, false);
+		struct cfq_queue *new_cfqq;
+		new_cfqq = cfq_get_queue(cfqd, BLK_RW_ASYNC, cic, bio,
+					 GFP_ATOMIC);
+		if (new_cfqq) {
+			cic->cfqq[BLK_RW_ASYNC] = new_cfqq;
+			cfq_put_queue(cfqq);
+		}
 	}
 
-	cfqq = cic_to_cfqq(cic, true);
+	cfqq = cic->cfqq[BLK_RW_SYNC];
 	if (cfqq)
 		cfq_mark_cfqq_prio_changed(cfqq);
 
