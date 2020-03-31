@@ -126,9 +126,10 @@
 #define __attribute_const__	__attribute__((__const__))
 #define __maybe_unused		__attribute__((unused))
 #define __always_unused		__attribute__((unused))
+#define __mode(x)               __attribute__((mode(x)))
 
-
-/* gcc version specific checks */
+/* gcc version specific checks
+gcc version specific checks */
 
 #if GCC_VERSION < 30200
 # error Sorry, your compiler is too old - please upgrade it.
