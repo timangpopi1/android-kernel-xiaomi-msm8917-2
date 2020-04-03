@@ -27,7 +27,6 @@ static DEFINE_MUTEX(boost_slot_mutex);
 static DEFINE_MUTEX(stune_boost_mutex);
 static struct schedtune *getSchedtune(char *st_name);
 static int dynamic_boost(struct schedtune *st, int boost);
-<<<<<<< HEAD
 struct boost_slot {
 	struct list_head list;
 	int idx;
