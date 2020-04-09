@@ -69,7 +69,7 @@ struct pinctrl_state *aw87319_rst_low = NULL;
 
 
 
-char Spk_Pa_Flag[9] = "";
+char Spk_Pa_Flag[] = " ";
 
 static void aw87319_pa_pwron(void)
 {
